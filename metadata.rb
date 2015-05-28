@@ -1,0 +1,7 @@
+name 'workstation'
+maintainer 'Matt Stratton'
+maintainer_email 'matt.stratton@gmail.com'
+license 'apache2'
+description 'Installs/Configures workstation'
+long_description 'Installs/Configures workstation'
+version '0.1.0'
