@@ -31,5 +31,5 @@ git "/Users/#{node['workstation']['user']}/.oh-my-zsh" do
   not_if "test -d /Users/#{node['workstation']['user']}/.oh-my-zsh"
 end
 
-
+include_recipe 'workstation::vim'
 include_recipe 'workstation::dotfiles'
