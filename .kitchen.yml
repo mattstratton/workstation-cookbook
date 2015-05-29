@@ -13,6 +13,8 @@ platforms:
       provider: vmware_fusion
       ssh:
         insert_key: false
+      customize:
+        memory: 4096
 
 suites:
   - name: default
