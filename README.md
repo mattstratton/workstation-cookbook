@@ -9,13 +9,15 @@ This cookbook assumes OS X 10.10 "Yosemite". It has only been tested with chef-c
 
 ### Cookbooks
 * git
-* zsh
+* homebrew
 
 Recipes
 -----------------
 
 ### default
-does default things
+Wrapper recipe that executes all the smaller bits. It's highly unlikely that you wll run a sub-recipe, or that it will even work.
+
+The default recipe also ensures that homebrew is installed, as well as installing zsh and oh-my-zsh.
 
 ### dotfiles
 configures the dotfiles
