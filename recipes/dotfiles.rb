@@ -45,3 +45,13 @@ template "#{homedir}/.zshrc" do
   mode '0644'
   action :create_if_missing
 end
+
+# tmux config
+
+template "#{homedir}/.tmux.conf" do
+  source 'tmux.conf.erb'
+  user node['workstation']['user']
+  group 'staff'
+  mode '0644'
+  action :create_if_missing
+end
