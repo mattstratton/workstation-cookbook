@@ -20,7 +20,7 @@ homedir = "/Users/#{node['workstation']['user']}/"
 
 # git config file
 
-template "homedir/.gitconfig" do
+template "#{homedir}/.gitconfig" do
   source 'gitconfig.erb'
   user node['workstation']['user']
   group 'staff'
@@ -29,7 +29,7 @@ end
 
 # global gitignore
 
-template "homedir/.gitignore_global" do
+template "#{homedir}/.gitignore_global" do
   source 'gitignore_global.erb'
   user node['workstation']['user']
   group 'staff'
