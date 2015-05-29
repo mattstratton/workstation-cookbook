@@ -43,4 +43,5 @@ template "#{homedir}/.zshrc" do
   user node['workstation']['user']
   group 'staff'
   mode '0644'
+  action :create_if_missing
 end
