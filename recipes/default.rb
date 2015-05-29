@@ -16,4 +16,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+include_recipe 'homebrew'
+
+package 'git'
+package 'zsh'
+# install oh-my-zsh
+
+git "/Users/#{node['workstation']['user']}/.oh-my-zsh" do
+  repository "https://github.com/robbyrussell/oh-my-zsh.git"
+  reference "master"
+  user node['workstation']['user']
+  group 'staff'
+  action :checkout
+  not_if "test -d /Users/#{node['workstation']['user']}/.oh-my-zsh"
+end
+
+
 include_recipe 'workstation::dotfiles'
