@@ -26,3 +26,12 @@ template "homedir/.gitconfig" do
   group 'staff'
   mode '0644'
 end
+
+# global gitignore
+
+template "homedir/.gitignore_global" do
+  source 'gitignore_global.erb'
+  user node['workstation']['user']
+  group 'staff'
+  mode '0644'
+end
