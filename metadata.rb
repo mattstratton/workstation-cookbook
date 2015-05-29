@@ -5,3 +5,6 @@ license 'apache2'
 description 'Installs/Configures workstation'
 long_description 'Installs/Configures workstation'
 version '0.1.0'
+
+depends 'git', '~> 4.2.2'
+depends 'homebrew', '~> 1.12.0'
