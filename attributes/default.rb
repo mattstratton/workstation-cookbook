@@ -1,0 +1,1 @@
+default['workstation']['user']='vagrant'
