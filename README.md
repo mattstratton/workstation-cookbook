@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/mattstratton/workstation-cookbook.png?label=ready&title=Ready)](https://waffle.io/mattstratton/workstation-cookbook)
 workstation
 ===================
 
