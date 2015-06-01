@@ -44,3 +44,9 @@ execute 'Install iTerm' do
   command "unzip #{Chef::Config[:file_cache_path]}/iTerm2_v2_0.zip -d /Applications"
   not_if { ::File.exists?('/Applications/iTerm.app') }
 end
+
+chef_dk 'my_chef_dk' do
+    version 'latest'
+    global_shell_init true
+    action :install
+end
