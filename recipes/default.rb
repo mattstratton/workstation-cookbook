@@ -33,3 +33,13 @@ end
 
 include_recipe 'workstation::vim'
 include_recipe 'workstation::dotfiles'
+
+# install iterm
+remote_file "#{Chef::Config[:file_cache_path]}/iTerm2_v2_0.zip" do
+  source 'https://iterm2.com/downloads/stable/iTerm2_v2_0.zip'
+end
+
+execute 'Install iTerm' do
+  command "unzip #{Chef::Config[:file_cache_path]}/iTerm2_v2_0.zip -d /Applications"
+  not_if { ::File.exists?('/Applications/iTerm.app') }
+end
