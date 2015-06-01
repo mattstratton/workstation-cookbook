@@ -16,7 +16,40 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package 'vim'
+# install a bunch of packages
 
-# install tmux
-package 'tmux'
+%w[
+  vim
+  tmux
+  tree
+  wget
+  packer
+  atom
+  cowsay
+  fortune
+].each do |p|
+  package p
+end
+
+# install tpm
+
+directory "/Users/#{node['workstation']['user']}/.tmux/" do
+  user node['workstation']['user']
+  group 'staff'
+  recursive true
+end
+
+directory "/Users/#{node['workstation']['user']}/.tmux/plugins" do
+  user node['workstation']['user']
+  group 'staff'
+  recursive true
+end
+
+git "/Users/#{node['workstation']['user']}/.tmux/plugins/tpm" do
+  repository "https://github.com/tmux-plugins/tpm"
+  reference "master"
+  user node['workstation']['user']
+  group 'staff'
+  action :checkout
+  not_if "test -d /Users/#{node['workstation']['user']}/.tmux/plugins/tpm/tpm"
+end
