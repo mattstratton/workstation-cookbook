@@ -50,3 +50,10 @@ chef_dk 'my_chef_dk' do
     global_shell_init true
     action :install
 end
+
+template '/etc/shells' do
+  source 'shells.erb'
+  owner 'root'
+  group 'wheel'
+  mode '0644'
+end
