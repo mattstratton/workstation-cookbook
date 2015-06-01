@@ -17,6 +17,7 @@
 # limitations under the License.
 
 include_recipe 'homebrew'
+include_recipe 'homebrew::cask'
 
 package 'git'
 package 'zsh'

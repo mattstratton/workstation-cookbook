@@ -24,12 +24,15 @@
   tree
   wget
   packer
-  atom
   cowsay
   fortune
 ].each do |p|
   package p
 end
+
+# install atom
+
+homebrew_cask "atom"
 
 # install tpm
 
