@@ -6,7 +6,7 @@ This cookbook is used to configure an OS X workstation according to my needs. Yo
 
 Requirements
 ------------
-This cookbook assumes OS X 10.10 "Yosemite". It has only been tested with chef-client 12. It actually kind of breaks with 12.3.0, so it's recommended to use 12.0.3. Which will get messed up with the chef-dk that it installs. See [this PR on the Homebrew cookbook](https://github.com/opscode-cookbooks/homebrew/pull/72)
+This cookbook assumes OS X 10.10 "Yosemite". It has only been tested with chef-client 12. It actually kind of breaks with 12.3.0, so it's recommended to use 12.0.3. Which will get messed up with the chef-dk that it installs. See [this PR on the Homebrew cookbook](https://github.com/opscode-cookbooks/homebrew/pull/72) **Update** - it seems that the issue might have been fixed, but this is untested right now.
 
 ### Cookbooks
 * git
