@@ -45,3 +45,14 @@ template "#{homedir}/.tmux.conf" do
   mode '0644'
   action :create_if_missing
 end
+
+# teamocil config
+
+directory "#{homedir}/.teamocil" do
+  user node['workstation']['user']
+  group 'staff'
+  mode '0644'
+  action :create_if_missing
+end
+
+## add templates for teamocil once I get them

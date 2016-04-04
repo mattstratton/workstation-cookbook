@@ -73,6 +73,18 @@ end
   omnifocus
   visual-studio-code
   rescuetime
+  vagrant
+  virtualbox
+  dockertoolbox
+  evernote
+  adobe-creative-cloud
+  adobe-creative-cloud-cleaner-tool
+  skitch
+  dash
+  heroku-toolbelt
+  screenhero
+  skype
+  microsoft-office
 ].each do |app|
   homebrew_cask app
 end
@@ -106,6 +118,15 @@ chef_dk 'my_chef_dk' do
     version 'latest'
     global_shell_init true
     action :install
+end
+
+execute 'set chefdk permissions' do
+  command "sudo chown -R  #{node['workstation']['user']}:staff /Users/#{node['workstation']['user']}/.chefdk"
+end
+
+execute 'install teamocil' do
+  command "chef gem install teamocil"
+  user node['workstation']['user']
 end
 
 template '/etc/shells' do
