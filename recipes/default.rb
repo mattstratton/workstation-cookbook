@@ -42,7 +42,6 @@ template "/Users/#{node['workstation']['user']}/.zshrc" do
   action :create_if_missing
 end
 
-include_recipe 'workstation::vim'
 # install a bunch of packages
 
 %w[
