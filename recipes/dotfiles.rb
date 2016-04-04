@@ -36,16 +36,6 @@ template "#{homedir}/.gitignore_global" do
   mode '0644'
 end
 
-# oh-my-zsh config
-
-template "#{homedir}/.zshrc" do
-  source 'zshrc.erb'
-  user node['workstation']['user']
-  group 'staff'
-  mode '0644'
-  action :create_if_missing
-end
-
 # tmux config
 
 template "#{homedir}/.tmux.conf" do

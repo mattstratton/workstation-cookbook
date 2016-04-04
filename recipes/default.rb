@@ -32,18 +32,76 @@ git "/Users/#{node['workstation']['user']}/.oh-my-zsh" do
   not_if "test -d /Users/#{node['workstation']['user']}/.oh-my-zsh"
 end
 
+# oh-my-zsh config
+
+template "#{homedir}/.zshrc" do
+  source 'zshrc.erb'
+  user node['workstation']['user']
+  group 'staff'
+  mode '0644'
+  action :create_if_missing
+end
+
 include_recipe 'workstation::vim'
+# install a bunch of packages
+
+%w[
+  vim
+  tmux
+  tree
+  wget
+  packer
+  cowsay
+  fortune
+].each do |p|
+  package p
+end
+
+# install a bunch of Applications
+
+%w[
+  atom
+  iterm2
+  tower
+  beyond-compare
+  alfred
+  dropbox
+  textexpander
+  bartender
+  clarify
+  codekit
+  omnigraffle
+  omnifocus
+  visual-studio-code
+  rescuetime
+].each do |app|
+  homebrew_cask app
+end
+
+# install tpm
+
+directory "/Users/#{node['workstation']['user']}/.tmux/" do
+  user node['workstation']['user']
+  group 'staff'
+  recursive true
+end
+
+directory "/Users/#{node['workstation']['user']}/.tmux/plugins" do
+  user node['workstation']['user']
+  group 'staff'
+  recursive true
+end
+
+git "/Users/#{node['workstation']['user']}/.tmux/plugins/tpm" do
+  repository "https://github.com/tmux-plugins/tpm"
+  reference "master"
+  user node['workstation']['user']
+  group 'staff'
+  action :checkout
+  not_if "test -d /Users/#{node['workstation']['user']}/.tmux/plugins/tpm/tpm"
+end
+
 include_recipe 'workstation::dotfiles'
-
-# install iterm
-remote_file "#{Chef::Config[:file_cache_path]}/iTerm2_v2_0.zip" do
-  source 'https://iterm2.com/downloads/stable/iTerm2_v2_0.zip'
-end
-
-execute 'Install iTerm' do
-  command "unzip #{Chef::Config[:file_cache_path]}/iTerm2_v2_0.zip -d /Applications"
-  not_if { ::File.exists?('/Applications/iTerm.app') }
-end
 
 chef_dk 'my_chef_dk' do
     version 'latest'
@@ -57,3 +115,10 @@ template '/etc/shells' do
   group 'wheel'
   mode '0644'
 end
+
+execute 'change shell to zsh' do
+  command "chsh -s /usr/local/bin/zsh #{node['workstation']['user']}"
+  # Should add a guard using dscl . -read /Users/#{node['workstation']['user']} UserShell
+end
+
+include_recipe 'mac-app-store::default'
