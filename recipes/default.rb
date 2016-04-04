@@ -34,7 +34,7 @@ end
 
 # oh-my-zsh config
 
-template "#{homedir}/.zshrc" do
+template "/Users/#{node['workstation']['user']}/.zshrc" do
   source 'zshrc.erb'
   user node['workstation']['user']
   group 'staff'
