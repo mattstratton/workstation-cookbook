@@ -85,6 +85,7 @@ end
   screenhero
   skype
   microsoft-office
+  macid
 ].each do |app|
   homebrew_cask app
 end
