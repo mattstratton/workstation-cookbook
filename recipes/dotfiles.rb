@@ -51,7 +51,7 @@ end
 directory "#{homedir}/.teamocil" do
   user node['workstation']['user']
   group 'staff'
-  mode '0644'
+  mode '0744'
   action :create
 end
 
@@ -62,7 +62,7 @@ end
 directory "#{homedir}/.chef" do
   user node['workstation']['user']
   group 'staff'
-  mode '0644'
+  mode '0744'
   action :create
 end
 
