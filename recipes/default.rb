@@ -16,6 +16,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+chef_gem "chef-vault"
+require "chef-vault"
+
+vault = ChefVault::Item.load("secrets", "mattstratton")
+
+# log 'appstore password' do
+#   message vault['appstore']
+# end
+
 include_recipe 'homebrew'
 include_recipe 'homebrew::cask'
 
