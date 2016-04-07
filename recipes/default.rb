@@ -57,6 +57,7 @@ end
 end
 
 # install a bunch of Applications
+# Removing textexpander because cask doesn't have the new one...yet
 
 %w[
   atom
@@ -65,7 +66,6 @@ end
   beyond-compare
   alfred
   dropbox
-  textexpander
   bartender
   clarify
   codekit
@@ -88,6 +88,17 @@ end
   macid
 ].each do |app|
   homebrew_cask app
+end
+
+# Install textexpander
+remote_file "#{Chef::Config[:file_cache_path]}/TextExpander_6.0.zip" do
+  source 'https://cdn.textexpander.com/mac/TextExpander_6.0.zip'
+  not_if { ::File.exists?("#{Chef::Config[:file_cache_path]}/TextExpander_6.0.zip") }
+end
+
+execute 'Install TextExpander' do
+  command "unzip #{Chef::Config[:file_cache_path]}/TextExpander_6.0.zip -d /Applications"
+  not_if { ::File.exists?('/Applications/TextExpander.app') }
 end
 
 # install tpm
