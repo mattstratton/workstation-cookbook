@@ -61,6 +61,7 @@ end
   packer
   cowsay
   fortune
+  zsh-completions
 ].each do |p|
   package p
 end
