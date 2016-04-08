@@ -52,7 +52,8 @@ plugins=(atom knife git ruby gem history history-substring-search brew bundler s
 
 source $ZSH/oh-my-zsh.sh
 
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/<%= node['workstation']['user'] %>/.chefdk/gem/ruby/2.1.0/bin:/opt/chefdk/bin:/opt/chefdk/embedded/bin:~/bin:/usr/local/packer:/Library/Frameworks/Python.framework/Versions/3.4/bin:/usr/local/sbin"
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/<%= node['workstation']['user'] %>/.chefdk/gem/ruby/2.1.0/bin:/opt/chefdk/bin:/opt/chefdk/embedded/bin:~/bin:/usr/local/packer:/Library/Frameworks/Python.framework/Versions/3.4/bin:/usr/local/sbin:/opt/delivery-cli/bin"
+
 # export MANPATH="/usr/local/man:$MANPATH"
 
 export BUNDLE_PATH='~/.chefdk/gem/2.1.0'
