@@ -178,7 +178,7 @@ end
 
 # add battery script
 
-cookbook_file "/#{node['workstation']['user']}/battery" do
+cookbook_file "/Users/#{node['workstation']['user']}/battery" do
   source 'battery'
   owner node['workstation']['user']
   group 'staff'
