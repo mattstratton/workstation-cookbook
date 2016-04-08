@@ -57,7 +57,7 @@ end
 
 ## add templates for teamocil once I get them
 
-teamocil = (node['worktation']['teamocil'] || []).map do |t|
+teamocil = (node['workstation']['teamocil'] || []).map do |t|
   if t.is_a?(Hash)
     t
   elsif t.is_a?(String)
