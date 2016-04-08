@@ -51,7 +51,7 @@ template "/Users/#{node['workstation']['user']}/.zshrc" do
   action :create_if_missing
 end
 
-# install a bunch of packages
+# install a bunch of packages - remove vim from lists because of stupid bug
 
 %w(
   ack
@@ -72,7 +72,6 @@ end
   packer
   tmux
   tree
-  vim
   wget
   youtube-dl
   zsh-completions
