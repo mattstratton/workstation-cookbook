@@ -93,3 +93,10 @@ file "#{homedir}/.chef/mattstratton.pem" do
   group 'staff'
   mode 0600
 end
+
+file "#{homedir}/.chef/knife.rb" do
+  source 'knife.rb'
+  owner node['workstation']['user']
+  group 'staff'
+  mode 0744
+end
