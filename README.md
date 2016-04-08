@@ -6,12 +6,13 @@ This cookbook is used to configure an OS X workstation according to my needs. Yo
 
 Requirements
 ------------
-This cookbook assumes OS X 10.10 "Yosemite". It has only been tested with chef-client 12. It actually kind of breaks with 12.3.0, so it's recommended to use 12.0.3. Which will get messed up with the chef-dk that it installs. See [this PR on the Homebrew cookbook](https://github.com/opscode-cookbooks/homebrew/pull/72) **Update** - it seems that the issue might have been fixed, but this is untested right now.
+This cookbook assumes OS X 10.11 "El Capitan". It has only been tested with chef-client 12.
 
 ### Cookbooks
 * git
 * homebrew
 * chef-dk
+* mac-app-store'
 
 Recipes
 -----------------
@@ -24,8 +25,6 @@ The default recipe also ensures that homebrew is installed, as well as installin
 ### dotfiles
 configures the dotfiles
 
-### vim
-installs vim and tmux and a bunch of packages. This recipe sucks.
 
 Attributes
 -----------------
@@ -35,6 +34,10 @@ Attributes
 
 ```default['workstation']['AWS_SECRET_ACCESS_KEY']``` - Secret key for AWS. See above.
 
+```default['mac_app_store']['apps']```- comma-delimited array of apps to install from the Mac App Store
+
+```default['workstation']['teamocil']``` - comma-delimited array of teamocil configuration files
+
 License & Authors
 -----------------
 
@@ -42,7 +45,7 @@ License & Authors
 
 ```text
 
-Copyright:: 2015, Matt Stratton
+Copyright:: 2015-2016, Matt Stratton
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
