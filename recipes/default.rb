@@ -54,13 +54,27 @@ end
 # install a bunch of packages
 
 %w(
-  vim
+  ack
+  ansible
+  awscli
+  cowsay
+  curl
+  fortune
+  hub
+  hugo
+  imagemagick
+  jq
+  lua
+  luajit
+  ncurses
+  node
+  openssl
+  packer
   tmux
   tree
+  vim
   wget
-  packer
-  cowsay
-  fortune
+  youtube-dl
   zsh-completions
 ).each do |p|
   package p
