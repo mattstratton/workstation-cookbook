@@ -181,7 +181,7 @@ end
 cookbook_file "/#{node['workstation']['user']}/battery" do
   source 'battery'
   owner node['workstation']['user']
-  group staff
+  group 'staff'
   mode 0744
 end
 
