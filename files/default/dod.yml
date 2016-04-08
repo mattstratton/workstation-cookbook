@@ -1,0 +1,12 @@
+windows:
+  - name: dod
+    root: ~/src/devopsdays-web
+    layout: even-horizontal
+    panes:
+      - commands:
+        - cd ~/src/devopsdays-web
+        - git pull
+        - git status
+        - atom .
+        - open http://localhost:1313
+      - hugo server -b="http://localhost:1313" -w

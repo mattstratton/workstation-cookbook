@@ -16,10 +16,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-chef_gem "chef-vault"
-require "chef-vault"
+chef_gem 'chef-vault'
+require 'chef-vault'
 
-vault = ChefVault::Item.load("secrets", "mattstratton")
+# vault = ChefVault::Item.load('secrets', 'mattstratton')
 
 # log 'appstore password' do
 #   message vault['appstore']
@@ -33,8 +33,8 @@ package 'zsh'
 # install oh-my-zsh
 
 git "/Users/#{node['workstation']['user']}/.oh-my-zsh" do
-  repository "https://github.com/robbyrussell/oh-my-zsh.git"
-  reference "master"
+  repository 'https://github.com/robbyrussell/oh-my-zsh.git'
+  reference 'master'
   user node['workstation']['user']
   group 'staff'
   action :checkout
@@ -53,7 +53,7 @@ end
 
 # install a bunch of packages
 
-%w[
+%w(
   vim
   tmux
   tree
@@ -62,14 +62,14 @@ end
   cowsay
   fortune
   zsh-completions
-].each do |p|
+).each do |p|
   package p
 end
 
 # install a bunch of Applications
 # Removing textexpander because cask doesn't have the new one...yet
 
-%w[
+%w(
   atom
   iterm2
   tower
@@ -96,19 +96,19 @@ end
   skype
   microsoft-office
   macid
-].each do |app|
+).each do |app|
   homebrew_cask app
 end
 
 # Install textexpander
 remote_file "#{Chef::Config[:file_cache_path]}/TextExpander_6.0.zip" do
   source 'https://cdn.textexpander.com/mac/TextExpander_6.0.zip'
-  not_if { ::File.exists?("#{Chef::Config[:file_cache_path]}/TextExpander_6.0.zip") }
+  not_if { ::File.exist?("#{Chef::Config[:file_cache_path]}/TextExpander_6.0.zip") }
 end
 
 execute 'Install TextExpander' do
   command "unzip #{Chef::Config[:file_cache_path]}/TextExpander_6.0.zip -d /Applications"
-  not_if { ::File.exists?('/Applications/TextExpander.app') }
+  not_if { ::File.exist?('/Applications/TextExpander.app') }
 end
 
 # install tpm
@@ -126,8 +126,8 @@ directory "/Users/#{node['workstation']['user']}/.tmux/plugins" do
 end
 
 git "/Users/#{node['workstation']['user']}/.tmux/plugins/tpm" do
-  repository "https://github.com/tmux-plugins/tpm"
-  reference "master"
+  repository 'https://github.com/tmux-plugins/tpm'
+  reference 'master'
   user node['workstation']['user']
   group 'staff'
   action :checkout
@@ -137,9 +137,9 @@ end
 include_recipe 'workstation::dotfiles'
 
 chef_dk 'my_chef_dk' do
-    version 'latest'
-    global_shell_init true
-    action :install
+  version 'latest'
+  global_shell_init true
+  action :install
 end
 
 execute 'set chefdk permissions' do
@@ -147,7 +147,7 @@ execute 'set chefdk permissions' do
 end
 
 execute 'install teamocil' do
-  command "chef gem install teamocil"
+  command 'chef gem install teamocil'
   user node['workstation']['user']
 end
 

@@ -1,0 +1,12 @@
+windows:
+  - name: bwedding
+    root: ~/src/bourbonwedding
+    layout: even-horizontal
+    panes:
+      - commands:
+        - cd ~/src/bourbonwedding
+        - git pull
+        - git status
+        - atom .
+        - open http://localhost:1313
+      - hugo server -b="http://localhost:1313" -w

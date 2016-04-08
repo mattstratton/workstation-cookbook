@@ -57,6 +57,25 @@ end
 
 ## add templates for teamocil once I get them
 
+teamocil = (node['worktation']['teamocil'] || []).map do |t|
+  if t.is_a?(Hash)
+    t
+  elsif t.is_a?(String)
+    { name: t }
+  else
+    fail(Chef::Exceptions::ValidationFailed, "Invalid teamocil entry '#{t}'")
+  end
+end
+
+teamocil.each do |t|
+  file "#{homedir}/.teamocil/#{t[:name]}.yml" do
+    user node['workstation']['user']
+    group 'staff'
+    mode '0744'
+    action :create
+  end
+end
+
 # .chef config
 
 directory "#{homedir}/.chef" do
@@ -66,10 +85,10 @@ directory "#{homedir}/.chef" do
   action :create
 end
 
-vault_mattstratton_pem = ChefVault::Item.load("secrets", "mattstratton-pem")
+vault_mattstratton_pem = ChefVault::Item.load('secrets', 'mattstratton-pem')
 
 file "#{homedir}/.chef/mattstratton.pem" do
-  content vault_mattstratton_pem["mattstratton-pem"]
+  content vault_mattstratton_pem['mattstratton-pem']
   owner node['workstation']['user']
   group 'staff'
   mode 0600

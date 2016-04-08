@@ -1,0 +1,12 @@
+windows:
+  - name: ado-hugo
+    root: ~/src/ado-hugo
+    layout: even-horizontal
+    panes:
+      - commands:
+        - cd ~/src/ado-hugo
+        - git pull
+        - git status
+        - atom .
+        - open http://localhost:1313
+      - hugo server -b="http://localhost:1313" -w
