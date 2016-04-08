@@ -93,6 +93,7 @@ alias kd='kitchen destroy'
 alias sz='source ~/.zshrc'
 alias cg='chef generate'
 alias berksit='berks install && berks upload'
+alias brew='PATH="/usr/local/bin:/usr/local/sbin:/bin:/usr/bin:/sbin:/usr/sbin" brew'
 eval "$(chef shell-init zsh)"
 export AWS_ACCESS_KEY_ID=<%= node['workstation']['AWS_ACCESS_KEY_ID'] %>
 export AWS_SECRET_ACCESS_KEY=<%= node['workstation']['AWS_SECRET_ACCESS_KEY'] %>
