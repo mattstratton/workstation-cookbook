@@ -60,6 +60,7 @@ end
   cowsay
   curl
   fortune
+  gpg
   hub
   hugo
   imagemagick

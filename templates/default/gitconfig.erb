@@ -1,8 +1,11 @@
 [user]
 	name = Matt Stratton
 	email = matt.stratton@gmail.com
+	signingkey = <%= node['workstation']['gpgsigningkey'] %>
 [credential]
 	helper = osxkeychain
 [core]
 	excludesfile = /Users/<%= node['workstation']['user'] %>/.gitignore_global
 	editor = vim
+[commit]
+	gpgsign = true
