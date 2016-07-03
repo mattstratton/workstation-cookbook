@@ -106,13 +106,15 @@ end
   bartender
   clarify
   codekit
+  font-inconsolata
+  font-hack
+  filezilla
   omnigraffle
   omnifocus
   visual-studio-code
   rescuetime
   vagrant
   virtualbox
-  dockertoolbox
   evernote
   adobe-creative-cloud
   adobe-creative-cloud-cleaner-tool
@@ -123,6 +125,8 @@ end
   skype
   microsoft-office
   macid
+  rescuetime
+  onyx
 ).each do |app|
   homebrew_cask app
 end
