@@ -57,25 +57,38 @@ end
   ack
   ansible
   awscli
+  bfg
   cowsay
   curl
   fortune
-  gpg
+  freetype
+  gdbm
+  git
+  gnupg
+  graphicsmagick
   hub
   hugo
   imagemagick
+  jpeg
   jq
+  keybase
   lua
   luajit
   ncurses
   node
+  oniguruma
   openssl
   packer
+  pcre
+  readline
   tmux
   tree
   wget
+  xz
   youtube-dl
+  zsh
   zsh-completions
+  zsh-syntax-highlighting
 ).each do |p|
   package p
 end
