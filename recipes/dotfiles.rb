@@ -16,13 +16,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-homedir = "/Users/#{node['workstation']['user']}/"
+username = node['workstation']['user']
+homedir = "/Users/#{username}/"
+secrets = chef_vault_item('secrets', username)
 
 # git config file
 
 template "#{homedir}/.gitconfig" do
   source 'gitconfig.erb'
-  user node['workstation']['user']
+  user username
   group 'staff'
   mode '0644'
 end
@@ -31,57 +33,28 @@ end
 
 template "#{homedir}/.gitignore_global" do
   source 'gitignore_global.erb'
-  user node['workstation']['user']
+  user username
   group 'staff'
   mode '0644'
 end
 
-# tmux config
+# oh-my-zsh config
 
-template "#{homedir}/.tmux.conf" do
-  source 'tmux.conf.erb'
-  user node['workstation']['user']
-  group 'staff'
-  mode '0644'
-  action :create_if_missing
-end
-
-# teamocil config
-
-directory "#{homedir}/.teamocil" do
-  user node['workstation']['user']
-  group 'staff'
-  mode '0744'
-  action :create
-end
-
-## add templates for teamocil once I get them
-
-teamocil = (node['workstation']['teamocil'] || []).map do |t|
-  if t.is_a?(Hash)
-    t
-  elsif t.is_a?(String)
-    { name: t }
-  else
-    fail(Chef::Exceptions::ValidationFailed, "Invalid teamocil entry '#{t}'")
-  end
-end
-
-teamocil.each do |t|
-  file "#{homedir}/.teamocil/#{t[:name]}.yml" do
-    user node['workstation']['user']
-    group 'staff'
-    mode '0744'
-    action :create
-  end
-end
-
-# zsh config
 template "#{homedir}/.zshrc" do
   source 'zshrc.erb'
-  owner node['workstation']['user']
+  owner username
   group 'staff'
   mode 0744
   variables({
-    :username => node['workstation']['user']
+    :username => username,
+    :aws_access_key_id => secrets['aws_access_key_id'],
+    :aws_secret_access_key => secrets['aws_secret_access_key'],
+    :github_token => secrets['github_token'],
+    :changelog_github_token => secrets['changelog_github_token'],
+    :bowie_github_token => secrets['bowie_github_token'],
+    :pd_token => secrets['pd_token'],
+    :hab_auth_token => secrets['hab_auth_token'],
+    :atlas_token => secrets['atlas_token'],
   })
+  sensitive true
+end

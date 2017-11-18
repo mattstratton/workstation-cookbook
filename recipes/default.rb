@@ -16,33 +16,27 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+username = node['workstation']['user']
+homedir = "/Users/#{username}/"
+
 include_recipe 'homebrew'
 include_recipe 'homebrew::cask'
 
 package 'git'
 package 'zsh'
+
 # install oh-my-zsh
 
-git "/Users/#{node['workstation']['user']}/.oh-my-zsh" do
+git "#{homedir}/.oh-my-zsh" do
   repository 'https://github.com/robbyrussell/oh-my-zsh.git'
   reference 'master'
-  user node['workstation']['user']
+  user username
   group 'staff'
   action :checkout
-  not_if "test -d /Users/#{node['workstation']['user']}/.oh-my-zsh"
+  not_if "test -d #{homedir}/.oh-my-zsh"
 end
 
-# oh-my-zsh config
-
-template "/Users/#{node['workstation']['user']}/.zshrc" do
-  source 'zshrc.erb'
-  user node['workstation']['user']
-  group 'staff'
-  mode '0644'
-  action :create_if_missing
-end
-
-# install a bunch of homebrew formulae - remove vim from lists because of stupid bugv
+# install a bunch of homebrew formulae - remove vim from lists because of stupid bug
 
 node['workstation']['homebrew'].to_h.each do |k, v|
   next unless v == true
@@ -58,45 +52,16 @@ node['workstation']['cask'].to_h.each do |k, v|
   end
 end
 
-
-# install tpm
-
-directory "/Users/#{node['workstation']['user']}/.tmux/" do
-  user node['workstation']['user']
-  group 'staff'
-  recursive true
-end
-
-directory "/Users/#{node['workstation']['user']}/.tmux/plugins" do
-  user node['workstation']['user']
-  group 'staff'
-  recursive true
-end
-
-git "/Users/#{node['workstation']['user']}/.tmux/plugins/tpm" do
-  repository 'https://github.com/tmux-plugins/tpm'
-  reference 'master'
-  user node['workstation']['user']
-  group 'staff'
-  action :checkout
-  not_if "test -d /Users/#{node['workstation']['user']}/.tmux/plugins/tpm/tpm"
-end
-
 include_recipe 'workstation::dotfiles'
 
 chef_dk 'my_chef_dk' do
   version 'latest'
-  global_shell_init true
+  global_shell_init false
   action :install
 end
 
 execute 'set chefdk permissions' do
-  command "sudo chown -R  #{node['workstation']['user']}:staff /Users/#{node['workstation']['user']}/.chefdk"
-end
-
-execute 'install teamocil' do
-  command 'chef gem install teamocil'
-  user node['workstation']['user']
+  command "sudo chown -R  #{username}:staff #{homedir}/.chefdk"
 end
 
 template '/etc/shells' do
@@ -107,15 +72,18 @@ template '/etc/shells' do
 end
 
 execute 'change shell to zsh' do
-  command "chsh -s /usr/local/bin/zsh #{node['workstation']['user']}"
-  # Should add a guard using dscl . -read /Users/#{node['workstation']['user']} UserShell
+  command "chsh -s /usr/local/bin/zsh #{username}"
+  not_if "dscl . -read /Users/#{username} UserShell | grep zsh"
 end
+
+include_recipe 'workstation::chef'
+include_recipe 'workstation::ssh'
 
 # add battery script
 
-cookbook_file "/Users/#{node['workstation']['user']}/battery" do
+cookbook_file "#{homedir}/battery" do
   source 'battery'
-  owner node['workstation']['user']
+  owner username
   group 'staff'
   mode 0744
 end
