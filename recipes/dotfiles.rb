@@ -76,31 +76,6 @@ teamocil.each do |t|
   end
 end
 
-# .chef config
-
-directory "#{homedir}/.chef" do
-  user node['workstation']['user']
-  group 'staff'
-  mode '0744'
-  action :create
-end
-
-vault_mattstratton_pem = ChefVault::Item.load('secrets', 'mattstratton-pem')
-
-file "#{homedir}/.chef/mattstratton.pem" do
-  content vault_mattstratton_pem['mattstratton-pem']
-  owner node['workstation']['user']
-  group 'staff'
-  mode 0600
-end
-
-cookbook_file "#{homedir}/.chef/knife.rb" do
-  source 'knife.rb'
-  owner node['workstation']['user']
-  group 'staff'
-  mode 0744
-end
-
 # zsh config
 template "#{homedir}/.zshrc" do
   source 'zshrc.erb'
