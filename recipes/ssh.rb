@@ -35,4 +35,5 @@ file "#{homedir}/.ssh/id_rsa" do
   owner username
   group 'staff'
   mode 0600
+  sensitive true  
 end

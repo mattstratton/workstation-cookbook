@@ -45,4 +45,5 @@ file "#{homedir}/.chef/{#node['workstation']['chef']['user']}" do
   owner username
   group 'staff'
   mode 0600
+  sensitive true  
 end
