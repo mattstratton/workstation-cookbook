@@ -6,14 +6,15 @@ provisioner:
   name: chef_zero
 
 platforms:
-  - name: test-osx
+  - name: high-sierra
     driver:
-      box: test-osx
+      box: mattstratton/osx_high_sierra
       gui: true
 
 suites:
   - name: default
     data_bags_path: "test/integration/data_bags"
     run_list:
-      - recipe[workstation::ssh]
+      - recipe[workstation::default]
+      # - recipe[workstation::tmux]
     attributes:
