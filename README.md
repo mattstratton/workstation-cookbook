@@ -2,7 +2,7 @@
 
 This cookbook is used to configure an OS X workstation according to my needs. Your needs may differ. Bear in mind that using this cookbook may end up with configurations that make you not a happy person.
 
-##Requirements
+## Requirements
 
 This cookbook assumes OS X 10.13 "High Sierra". It has only been tested with chef-client 13.
 
