@@ -1,11 +1,17 @@
 [user]
-	name = Matt Stratton
-	email = matt.stratton@gmail.com
-	signingkey = <%= node['workstation']['gpgsigningkey'] %>
+	name = <%= node['workstation']['git']['name'] =%>
+	email = <%= node['workstation']['git']['email'] =%>
 [credential]
 	helper = osxkeychain
-[core]
-	excludesfile = /Users/<%= node['workstation']['user'] %>/.gitignore_global
-	editor = vim
+[gpg]
+[tag]
 [commit]
-	gpgsign = true
+    gpgsign = true
+    template = ~/.gitmessage
+[core]
+	excludesfile = /Users/<%= node['workstation']['user'] =%>/.gitignore_global
+	editor = code --wait
+[diff]
+    tool = default-difftool
+[difftool "default-difftool"]
+    cmd = code --wait --diff $LOCAL $REMOTE

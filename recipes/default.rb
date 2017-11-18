@@ -2,7 +2,7 @@
 # Cookbook Name:: workstation
 # Recipe:: default
 #
-# Copyright 2015 Matt Stratton
+# Copyright 2017 Matt Stratton
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,15 +15,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-chef_gem 'chef-vault'
-require 'chef-vault'
-
-# vault = ChefVault::Item.load('secrets', 'mattstratton')
-
-# log 'appstore password' do
-#   message vault['appstore']
-# end
 
 include_recipe 'homebrew'
 include_recipe 'homebrew::cask'
@@ -51,96 +42,22 @@ template "/Users/#{node['workstation']['user']}/.zshrc" do
   action :create_if_missing
 end
 
-# install a bunch of packages - remove vim from lists because of stupid bug
+# install a bunch of homebrew formulae - remove vim from lists because of stupid bugv
 
-%w(
-  ack
-  ansible
-  awscli
-  bfg
-  cowsay
-  curl
-  fortune
-  freetype
-  gdbm
-  git
-  gnupg
-  graphicsmagick
-  hub
-  hugo
-  imagemagick
-  jpeg
-  jq
-  keybase
-  lua
-  luajit
-  ncurses
-  node
-  oniguruma
-  openssl
-  packer
-  pcre
-  readline
-  tmux
-  tree
-  wget
-  xz
-  youtube-dl
-  zsh
-  zsh-completions
-  zsh-syntax-highlighting
-).each do |p|
-  package p
+node['workstation']['homebrew'].to_h.each do |k, v|
+  next unless v == true
+  package k do
+  end
 end
 
-# install a bunch of Applications
-# Removing textexpander because cask doesn't have the new one...yet
+# Install casks
 
-%w(
-  atom
-  iterm2
-  tower
-  beyond-compare
-  alfred
-  dropbox
-  bartender
-  clarify
-  codekit
-  font-inconsolata
-  font-hack
-  filezilla
-  omnigraffle
-  omnifocus
-  visual-studio-code
-  rescuetime
-  vagrant
-  virtualbox
-  evernote
-  adobe-creative-cloud
-  adobe-creative-cloud-cleaner-tool
-  skitch
-  dash
-  heroku-toolbelt
-  screenhero
-  skype
-  microsoft-office
-  macid
-  rescuetime
-  onyx
-).each do |app|
-  homebrew_cask app
+node['workstation']['cask'].to_h.each do |k, v|
+  next unless v == true
+  homebrew_cask k
+  end
 end
 
-# Install textexpander
-remote_file "#{Chef::Config[:file_cache_path]}/TextExpander_6.0.zip" do
-  source 'https://cdn.textexpander.com/mac/TextExpander_6.0.zip'
-  not_if { ::File.exist?("#{Chef::Config[:file_cache_path]}/TextExpander_6.0.zip") }
-end
-
-execute 'Install TextExpander' do
-  command "unzip #{Chef::Config[:file_cache_path]}/TextExpander_6.0.zip -d /Applications"
-  not_if { ::File.exist?('/Applications/TextExpander.app') }
-end
 
 # install tpm
 
@@ -202,5 +119,3 @@ cookbook_file "/Users/#{node['workstation']['user']}/battery" do
   group 'staff'
   mode 0744
 end
-
-include_recipe 'mac-app-store::default'

@@ -1,6 +1,6 @@
 #
 # Cookbook:: workstation-cookbook
-# Recipe:: ssh
+# Spec:: default
 #
 # Copyright:: 2017, Matt Stratton
 #
@@ -16,28 +16,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# TODO: Refactor to chef-vault per Timberman's blog post http://jtimberman.housepub.org/blog/2013/09/10/managing-secrets-with-chef-vault/
 
-username = node['workstation']['user']
-homedir = "/Users/#{username}/"
+require 'spec_helper'
 
-directory "#{homedir}/.ssh" do
-  user username
-  group 'staff'
-  mode '0700'
-  action :create
-end 
+describe 'workstation-cookbook::chef' do
+  context 'When all attributes are default, on an Ubuntu 16.04' do
+    let(:chef_run) do
+      # for a complete list of available platforms and versions see:
+      # https://github.com/customink/fauxhai/blob/master/PLATFORMS.md
+      runner = ChefSpec::ServerRunner.new(platform: 'ubuntu', version: '16.04')
+      runner.converge(described_recipe)
+    end
 
-secrets = chef_vault_item('secrets', username)
-
-log 'message' do
-  message "Hello I am #{secrets["ssh_private_key"]}!"
-  level :warn
-end
-
-file "#{homedir}/.ssh/id_rsa" do
-  content secrets["ssh_private_key"]
-  owner username
-  group 'staff'
-  mode 0600
+    it 'converges successfully' do
+      expect { chef_run }.to_not raise_error
+    end
+  end
 end

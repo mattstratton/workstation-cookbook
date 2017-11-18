@@ -1,12 +1,12 @@
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/<%= node['workstation']['user'] %>/.oh-my-zsh
+export ZSH=<%= "/Users/#{@username}/.oh-my-zsh" =>
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="apple"
-
+# ZSH_THEME="powerlevel9k/powerlevel9k"
+ZSH_THEME="clean"
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
@@ -32,7 +32,7 @@ ZSH_THEME="apple"
 # under VCS as dirty. This makes repository status check for large repositories
 # much, much faster.
 # DISABLE_UNTRACKED_FILES_DIRTY="true"
-
+DEFAULT_USER="<%= @username %>"
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
 # The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
@@ -45,14 +45,14 @@ ZSH_THEME="apple"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(atom knife git ruby gem history history-substring-search bundler sublime tmux vagrant colored-man colorize pip python brew osx zsh-syntax-highlighting zsh-autosuggestions)
+plugins=(atom knife autojump git ruby gem history history-substring-search bundler sublime hub vagrant colored-man colorize pip python brew osx zsh-syntax-highlighting zsh-autosuggestions)
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
 
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/<%= node['workstation']['user'] %>/.chefdk/gem/ruby/2.1.0/bin:/opt/chefdk/bin:/opt/chefdk/embedded/bin:~/bin:/usr/local/packer:/Library/Frameworks/Python.framework/Versions/3.4/bin:/usr/local/sbin:/opt/delivery-cli/bin"
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/mattstratton/.chefdk/gem/ruby/2.1.0/bin:/opt/chefdk/bin:/opt/chefdk/embedded/bin:~/bin:/usr/local/packer:/Library/Frameworks/Python.framework/Versions/3.4/bin:/usr/local/sbin:/opt/delivery-cli/bin"
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -81,6 +81,32 @@ export EDITOR='vim'
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 #
+# ssh() {
+#    tmux set-option allow-rename off 1>/dev/null
+#    tmux rename-window "ssh/$*"
+#    command ssh "$@"
+#    tmux set-option allow-rename on 1>/dev/null
+
+# }
+#
+# powerline go
+ function powerline_precmd() {
+    PS1="$(~/go/bin/powerline-go -modules "ssh,cwd,perms,docker,git,exit,root"  -error $? -shell zsh)"
+}
+
+function install_powerline_precmd() {
+  for s in "${precmd_functions[@]}"; do
+    if [ "$s" = "powerline_precmd" ]; then
+      return
+    fi
+  done
+  precmd_functions+=(powerline_precmd)
+}
+
+if [ "$TERM" != "linux" ]; then
+    install_powerline_precmd
+fi
+
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
@@ -92,21 +118,48 @@ alias bump='knife spork bump ${PWD##*/} -o ..'
 alias kc='kitchen converge'
 alias kv='kitchen verify'
 alias kd='kitchen destroy'
+alias dro='delivery review --no-open'
 alias sz='source ~/.zshrc'
 alias cg='chef generate'
 alias berksit='berks install && berks upload'
+alias prep='changelog prepare'
 alias -s rb=ruby
 alias -s log="less -MN"
 alias imgls="~/.iterm2/imgls"
+alias imgcat="~/.iterm2/imgcat"
 alias brew='PATH="/usr/local/bin:/usr/local/sbin:/bin:/usr/bin:/sbin:/usr/sbin" brew'
+#alias go="colorgo"
 eval "$(chef shell-init zsh)"
-alias git=/usr/local/bin/git
-export AWS_ACCESS_KEY_ID=<%= node['workstation']['AWS_ACCESS_KEY_ID'] %>
-export AWS_SECRET_ACCESS_KEY=<%= node['workstation']['AWS_SECRET_ACCESS_KEY'] %>
-
+#alias git=/usr/local/bin/hub
+eval "$(hub alias -s)"
+export AWS_ACCESS_KEY_ID=ACCESS_KEY
+export AWS_SECRET_ACCESS_KEY=SECRET_KEY
+export GITHUB_TOKEN="efc681e90b296369e2c8d8d01e41c6fe4c8ac13e"
+export CHANGELOG_GITHUB_TOKEN="1e6ba1728106fa3e318d8b4ac6b003542800685b"
+export BOWIE_GITHUB_TOKEN="1e6ba1728106fa3e318d8b4ac6b003542800685b"
+export PD_TOKEN="zG9YTTcSii-QQsLpSj_U"
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
+# export DODPATH=/Users/mattstratton/go/src/github.com/devopsdays/devopsdays-cli/testdata/
+export DODPATH="/Users/<%= @username %>/src/github.com/devopsdays/devopsdays-web/"
+export PATH=$PATH:/Users/mattstratton/bin
+export HOMEBREW_NO_ANALYTICS=1
+export HOMEBREW_NO_INSECURE_REDIRECT=1
+export PATH="/Users/<%= @username %>/.cargo/bin:$PATH"
+export HAB_AUTH_TOKEN="90438167067a5751ffef1001cdd33a67b010db9e"
+export ATLAS_TOKEN="IfN3yimxT51a5g.atlasv1.zOf7rpnBooreEcKORADFgRPArIUaDRXfaJsI70Dc2PNJ6WoSc5br5OINjIbL1K2P5GY"
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 compctl -g '~/.teamocil/*(:t:r)' teamocil
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
+eval "$(thefuck --alias)"
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+# added by travis gem
+[ -f /Users/<%= @username %>/.travis/travis.sh ] && source /Users/<%= @username %>/.travis/travis.sh
+. <(azure --completion)
+
+if [ -f ~/.config/exercism/exercism_completion.zsh ]; then
+  . ~/.config/exercism/exercism_completion.zsh
+fi
+export GPG_TTY=$(tty)

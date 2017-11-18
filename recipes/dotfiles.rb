@@ -2,7 +2,7 @@
 # Cookbook Name:: workstation
 # Recipe:: dotfiles
 #
-# Copyright 2015 Matt Stratton
+# Copyright 2017 Matt Stratton
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -100,3 +100,13 @@ cookbook_file "#{homedir}/.chef/knife.rb" do
   group 'staff'
   mode 0744
 end
+
+# zsh config
+template "#{homedir}/.zshrc" do
+  source 'zshrc.erb'
+  owner node['workstation']['user']
+  group 'staff'
+  mode 0744
+  variables({
+    :username => node['workstation']['user']
+  })
