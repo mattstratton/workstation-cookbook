@@ -30,11 +30,6 @@ end
 
 secrets = chef_vault_item('secrets', username)
 
-log 'message' do
-  message "Hello I am #{secrets["ssh_private_key"]}!"
-  level :warn
-end
-
 file "#{homedir}/.ssh/id_rsa" do
   content secrets["ssh_private_key"]
   owner username
