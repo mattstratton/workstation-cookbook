@@ -1,0 +1,9 @@
+# See http://docs.chef.io/config_rb_knife.html for more information on knife configuration options
+
+current_dir = File.dirname(__FILE__)
+log_level                :info
+log_location             STDOUT
+node_name                "<%= node['workstation']['chef']['user'] =>"
+client_key               "#{current_dir}/<%= node['workstation']['chef']['user'] =>.pem"
+chef_server_url          "<%= node['workstation']['chef']['chef_server_url'] =>"
+cookbook_path            ["#{current_dir}/../cookbooks"]
