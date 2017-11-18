@@ -7,3 +7,5 @@ node_name                "<%= node['workstation']['chef']['user'] =>"
 client_key               "#{current_dir}/<%= node['workstation']['chef']['user'] =>.pem"
 chef_server_url          "<%= node['workstation']['chef']['chef_server_url'] =>"
 cookbook_path            ["#{current_dir}/../cookbooks"]
+knife[:vault_mode] = 'client'
+knife[:vault_admins] = [ 'mattstratton' ]
