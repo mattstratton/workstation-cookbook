@@ -132,22 +132,22 @@ alias brew='PATH="/usr/local/bin:/usr/local/sbin:/bin:/usr/bin:/sbin:/usr/sbin" 
 eval "$(chef shell-init zsh)"
 #alias git=/usr/local/bin/hub
 eval "$(hub alias -s)"
-export AWS_ACCESS_KEY_ID=ACCESS_KEY
-export AWS_SECRET_ACCESS_KEY=SECRET_KEY
-export GITHUB_TOKEN="efc681e90b296369e2c8d8d01e41c6fe4c8ac13e"
-export CHANGELOG_GITHUB_TOKEN="1e6ba1728106fa3e318d8b4ac6b003542800685b"
-export BOWIE_GITHUB_TOKEN="1e6ba1728106fa3e318d8b4ac6b003542800685b"
-export PD_TOKEN="zG9YTTcSii-QQsLpSj_U"
+export AWS_ACCESS_KEY_ID="<%= @aws_access_key_id =>"
+export AWS_SECRET_ACCESS_KEY="<%= @aws_secret_access_key =>"
+export GITHUB_TOKEN="<%= @github_token =>"
+export CHANGELOG_GITHUB_TOKEN="<%= @changelog_github_token =>"
+export BOWIE_GITHUB_TOKEN="<%= @bowie_github_token =>"
+export PD_TOKEN="<%= @pd_token =>"
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 # export DODPATH=/Users/mattstratton/go/src/github.com/devopsdays/devopsdays-cli/testdata/
 export DODPATH="/Users/<%= @username %>/src/github.com/devopsdays/devopsdays-web/"
-export PATH=$PATH:/Users/mattstratton/bin
+export PATH=$PATH:/Users/<%= @username %>/bin
 export HOMEBREW_NO_ANALYTICS=1
 export HOMEBREW_NO_INSECURE_REDIRECT=1
 export PATH="/Users/<%= @username %>/.cargo/bin:$PATH"
-export HAB_AUTH_TOKEN="90438167067a5751ffef1001cdd33a67b010db9e"
-export ATLAS_TOKEN="IfN3yimxT51a5g.atlasv1.zOf7rpnBooreEcKORADFgRPArIUaDRXfaJsI70Dc2PNJ6WoSc5br5OINjIbL1K2P5GY"
+export HAB_AUTH_TOKEN="<%= @hab_auth_token =>"
+export ATLAS_TOKEN="<%= @atlas_token =>"
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 compctl -g '~/.teamocil/*(:t:r)' teamocil
